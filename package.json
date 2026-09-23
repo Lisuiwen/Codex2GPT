@@ -1,0 +1,17 @@
+{
+  "name": "codex2gpt",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:broker": "pnpm --filter @codex2gpt/broker build",
+    "build:extension": "pnpm --filter @codex2gpt/extension build",
+    "dev:broker": "pnpm --filter @codex2gpt/broker dev",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}

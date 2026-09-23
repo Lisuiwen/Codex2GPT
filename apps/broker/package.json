@@ -1,0 +1,24 @@
+{
+  "name": "@codex2gpt/broker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsup src/index.ts --format esm --dts --clean --noExternal @codex2gpt/protocol",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@codex2gpt/protocol": "workspace:*",
+    "@modelcontextprotocol/sdk": "^1.18.0",
+    "ws": "^8.18.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "@types/ws": "^8.5.13",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}

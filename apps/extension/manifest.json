@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Codex2GPT",
+  "version": "0.1.0",
+  "description": "Bridge Codex review tasks to visible ChatGPT browser sessions.",
+  "minimum_chrome_version": "116",
+  "permissions": ["tabs"],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
