@@ -15,6 +15,7 @@ interface ContentJobResponse {
 
 export class SessionPool {
   private readonly sessions = new Map<string, SessionEntry>();
+  private readonly opening = new Map<string, Promise<SessionEntry>>();
 
   async run(job: JobMessage): Promise<JobResultMessage> {
     const entry = await this.ensureSession(job.sessionId);
@@ -67,6 +68,20 @@ export class SessionPool {
       return current;
     }
 
+    const inFlight = this.opening.get(sessionId);
+    if (inFlight) return inFlight;
+
+    const opening = this.openSession(sessionId);
+    this.opening.set(sessionId, opening);
+
+    try {
+      return await opening;
+    } finally {
+      this.opening.delete(sessionId);
+    }
+  }
+
+  private async openSession(sessionId: string): Promise<SessionEntry> {
     const tab = await chrome.tabs.create({
       url: "https://chatgpt.com/",
       active: false
