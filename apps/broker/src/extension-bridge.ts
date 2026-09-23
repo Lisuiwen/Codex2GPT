@@ -25,7 +25,14 @@ export class ExtensionBridge {
 
     this.wss = new WebSocketServer({ host: "127.0.0.1", port: this.port });
 
-    this.wss.on("connection", (socket) => {
+    this.wss.on("connection", (socket, request) => {
+      const origin = request.headers.origin ?? "";
+
+      if (!origin.startsWith("chrome-extension://")) {
+        socket.close(1008, "Codex2GPT only accepts Chrome extension connections");
+        return;
+      }
+
       if (this.socket && this.socket.readyState === WebSocket.OPEN) {
         this.socket.close(1012, "Replaced by newer Codex2GPT extension connection");
       }
